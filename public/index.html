@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marketplace Scraper</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Marketplace Scraper</h1>
+    <form id="scrape-form">
+      <label>
+        Query
+        <input type="text" id="query" placeholder="mountain bike" required />
+      </label>
+      <label>
+        Days Since Listed
+        <select id="daysSinceListed" required>
+          <option value="1">One day</option>
+          <option value="2" selected>Two days</option>
+          <option value="7">One week</option>
+          <option value="30">One month</option>
+        </select>
+      </label>
+      <label>
+        Extraction Mode
+        <select id="mode" required>
+          <option value="llm">AI (LLM)</option>
+          <option value="programmatic" selected>Parser</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button type="submit">Run</button>
+        <button type="reset" id="reset">Reset</button>
+      </div>
+    </form>
+
+    <div id="result" class="result hidden">
+      <h2>Results</h2>
+      <div id="listings"></div>
+      <pre id="jsonRaw" class="hidden"></pre>
+    </div>
+  </div>
+  <script src="/main.js"></script>
+</body>
+</html> 
