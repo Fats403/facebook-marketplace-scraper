@@ -21,21 +21,33 @@ app.use(express.static(publicDir));
 
 app.post('/api/scrape', async (req, res) => {
   try {
-    const { query, daysSinceListed, mode } = req.body || {};
+    const { query, daysSinceListed, mode, minPrice, maxPrice, category } = req.body || {};
     if (!query) {
       return res.status(400).json({ error: 'Missing required field: query' });
     }
 
-    // Validate and normalize daysSinceListed
     const days = parseInt(daysSinceListed, 10);
     if (!Number.isFinite(days) || days <= 0) {
       return res.status(400).json({ error: 'daysSinceListed must be a positive integer' });
     }
 
-    const urlObj = new URL('/marketplace/calgary/search', BASE_URL);
+    const categoryPath = (typeof category === 'string' && category.trim() !== '') ? category.trim() : '';
+    const pathStr = categoryPath ? `/marketplace/calgary/${encodeURIComponent(categoryPath)}` : '/marketplace/calgary/search';
+    const urlObj = new URL(pathStr, BASE_URL);
     urlObj.searchParams.set('daysSinceListed', String(days));
     urlObj.searchParams.set('query', query);
     urlObj.searchParams.set('exact', 'false');
+    urlObj.searchParams.set('sortBy', 'creation_time_descend');
+    urlObj.searchParams.set('radius', '200');
+
+    const min = parseInt(minPrice, 10);
+    if (Number.isFinite(min) && min >= 0) {
+      urlObj.searchParams.set('minPrice', String(min));
+    }
+    const max = parseInt(maxPrice, 10);
+    if (Number.isFinite(max) && max >= 0) {
+      urlObj.searchParams.set('maxPrice', String(max));
+    }
 
     const result = await runScrape({
       url: urlObj.toString(),

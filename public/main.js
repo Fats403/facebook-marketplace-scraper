@@ -47,15 +47,27 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const query = document.getElementById('query').value.trim();
   const daysSinceListed = document.getElementById('daysSinceListed').value;
+  const categoryVal = document.getElementById('category').value.trim();
+  const minPriceVal = document.getElementById('minPrice').value.trim();
+  const maxPriceVal = document.getElementById('maxPrice').value.trim();
   const mode = document.getElementById('mode').value;
 
   if (!query) return;
 
   const payload = {
-    query, // send raw; server will URL-encode
+    query,
     daysSinceListed: Number(daysSinceListed),
     mode
   };
+  if (categoryVal !== '') payload.category = categoryVal;
+  if (minPriceVal !== '') {
+    const n = Number(minPriceVal);
+    if (!Number.isNaN(n) && n >= 0) payload.minPrice = n;
+  }
+  if (maxPriceVal !== '') {
+    const n = Number(maxPriceVal);
+    if (!Number.isNaN(n) && n >= 0) payload.maxPrice = n;
+  }
 
   const button = e.target.querySelector('button[type="submit"]');
   button.disabled = true;
@@ -113,7 +125,4 @@ form.addEventListener('reset', () => {
   });
 });
 
-// Keep click handler for older browsers/buttons if needed
-resetBtn.addEventListener('click', () => {
-  // No-op: native form reset will trigger 'reset' listener above
-}); 
+resetBtn.addEventListener('click', () => {}); 

@@ -24,6 +24,18 @@
         </select>
       </label>
       <label>
+        Category (optional; defaults to bicycles)
+        <input type="text" id="category" placeholder="bicycles" value="bicycles" />
+      </label>
+      <label>
+        Min Price (optional)
+        <input type="number" id="minPrice" min="0" step="1" placeholder="e.g. 100" />
+      </label>
+      <label>
+        Max Price (optional)
+        <input type="number" id="maxPrice" min="0" step="1" placeholder="e.g. 500" />
+      </label>
+      <label>
         Extraction Mode
         <select id="mode" required>
           <option value="llm">AI (LLM)</option>
