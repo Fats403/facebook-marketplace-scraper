@@ -21,9 +21,13 @@ app.use(express.static(publicDir));
 
 app.post('/api/scrape', async (req, res) => {
   try {
-    const { query, daysSinceListed, mode, minPrice, maxPrice, category } = req.body || {};
-    if (!query) {
-      return res.status(400).json({ error: 'Missing required field: query' });
+    const { query, daysSinceListed, mode, minPrice, maxPrice, category, exact, sortBy, radius, location, locationId } = req.body || {};
+
+    const queryText = typeof query === 'string' ? query.trim() : '';
+    const hasQuery = queryText.length > 0;
+    const hasCategory = typeof category === 'string' && category.trim() !== '';
+    if (!hasQuery && !hasCategory) {
+      return res.status(400).json({ error: 'Provide either query or category' });
     }
 
     const days = parseInt(daysSinceListed, 10);
@@ -31,14 +35,33 @@ app.post('/api/scrape', async (req, res) => {
       return res.status(400).json({ error: 'daysSinceListed must be a positive integer' });
     }
 
-    const categoryPath = (typeof category === 'string' && category.trim() !== '') ? category.trim() : '';
-    const pathStr = categoryPath ? `/marketplace/calgary/${encodeURIComponent(categoryPath)}` : '/marketplace/calgary/search';
+    const locationSlug = (typeof location === 'string' && location.trim() !== '') ? location.trim() : 'calgary';
+    let locationSegment = encodeURIComponent(locationSlug);
+    if (typeof locationId === 'number' && Number.isFinite(locationId) && locationId > 0) {
+      locationSegment = encodeURIComponent(String(locationId));
+    } else if (typeof locationId === 'string' && locationId.trim() !== '') {
+      locationSegment = encodeURIComponent(locationId.trim());
+    }
+
+    const categoryPath = hasCategory ? `/${encodeURIComponent(category.trim())}` : '/search';
+    const pathStr = `/marketplace/${locationSegment}${categoryPath}`;
+
     const urlObj = new URL(pathStr, BASE_URL);
     urlObj.searchParams.set('daysSinceListed', String(days));
-    urlObj.searchParams.set('query', query);
-    urlObj.searchParams.set('exact', 'false');
-    urlObj.searchParams.set('sortBy', 'creation_time_descend');
-    urlObj.searchParams.set('radius', '200');
+    if (hasQuery) {
+      urlObj.searchParams.set('query', queryText);
+    }
+
+    if (exact === true) {
+      urlObj.searchParams.set('exact', 'true');
+    }
+    if (typeof sortBy === 'string' && sortBy.trim() !== '') {
+      urlObj.searchParams.set('sortBy', sortBy.trim());
+    }
+    const radiusNum = parseInt(radius, 10);
+    if (Number.isFinite(radiusNum) && radiusNum > 0 && radiusNum <= 300) {
+      urlObj.searchParams.set('radius', String(radiusNum));
+    }
 
     const min = parseInt(minPrice, 10);
     if (Number.isFinite(min) && min >= 0) {

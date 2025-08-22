@@ -6,7 +6,7 @@ body {
   color: #e6e6e6;
 }
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
   padding: 0 16px;
 }
@@ -19,8 +19,16 @@ form {
   border-radius: 8px;
   border: 1px solid #232736;
 }
+.grid-2 {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 700px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
 label { display: grid; gap: 6px; font-size: 14px; }
-input[type="text"], select, textarea {
+input[type="text"], input[type="number"], select, textarea {
   width: 100%;
   padding: 10px 12px;
   border-radius: 6px;
@@ -28,6 +36,12 @@ input[type="text"], select, textarea {
   background: #0f1118;
   color: #e6e6e6;
 }
+.checkboxes {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.checkbox { display: inline-flex; gap: 8px; align-items: center; }
 .buttons {
   display: flex;
   gap: 8px;
@@ -40,7 +54,7 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
-button[type="button"] { background: #6b7280; }
+button[type="reset"] { background: #6b7280; }
 button:hover { opacity: 0.95; }
 .result {
   margin-top: 16px;

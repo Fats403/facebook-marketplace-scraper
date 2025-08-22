@@ -48,18 +48,26 @@ form.addEventListener('submit', async (e) => {
   const query = document.getElementById('query').value.trim();
   const daysSinceListed = document.getElementById('daysSinceListed').value;
   const categoryVal = document.getElementById('category').value.trim();
+  const locationVal = document.getElementById('location').value.trim();
+  const locationIdVal = document.getElementById('locationId').value.trim();
   const minPriceVal = document.getElementById('minPrice').value.trim();
   const maxPriceVal = document.getElementById('maxPrice').value.trim();
+  const radiusVal = document.getElementById('radius').value.trim();
+  const exactChecked = document.getElementById('exact').checked;
+  const sortNewestChecked = document.getElementById('sortNewest').checked;
   const mode = document.getElementById('mode').value;
 
-  if (!query) return;
-
   const payload = {
-    query,
     daysSinceListed: Number(daysSinceListed),
     mode
   };
+  if (query !== '') payload.query = query;
   if (categoryVal !== '') payload.category = categoryVal;
+  if (locationVal !== '') payload.location = locationVal;
+  if (locationIdVal !== '') {
+    const lid = Number(locationIdVal);
+    if (!Number.isNaN(lid) && lid > 0) payload.locationId = lid;
+  }
   if (minPriceVal !== '') {
     const n = Number(minPriceVal);
     if (!Number.isNaN(n) && n >= 0) payload.minPrice = n;
@@ -68,6 +76,12 @@ form.addEventListener('submit', async (e) => {
     const n = Number(maxPriceVal);
     if (!Number.isNaN(n) && n >= 0) payload.maxPrice = n;
   }
+  if (radiusVal !== '') {
+    const r = Number(radiusVal);
+    if (!Number.isNaN(r) && r > 0 && r <= 300) payload.radius = r;
+  }
+  if (exactChecked) payload.exact = true;
+  if (sortNewestChecked) payload.sortBy = 'creation_time_descend';
 
   const button = e.target.querySelector('button[type="submit"]');
   button.disabled = true;

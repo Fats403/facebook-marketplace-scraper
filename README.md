@@ -31,6 +31,7 @@ Create a `.env` (optional) or export env vars:
 - `OPENAI_API_KEY` (required for LLM mode)
 - `OPENAI_MODEL` (optional) defaults to `gpt-5-nano`
 - `PORT` (optional): defaults to `3000`
+- `PUPPETEER_SKIP_DOWNLOAD` (optional): set to `true` to skip Chromium auto-download if Puppeteer install/download fails
 
 ## Run the Web UI (local only)
 
@@ -64,9 +65,7 @@ https://www.facebook.com/marketplace/calgary/search?query=<encoded>&daysSinceLis
 - Puppeteer issues:
   - macOS may need additional permissions; the project runs Chromium bundled with Puppeteer.
   - The script uses `--no-sandbox` flags by default for convenience.
-- Empty or partial results:
-  - Verify the base URL and server-side path parameters are correct for your target site.
-  - Try the "Parser" mode for faster feedback while tuning selectors.
+  - If Chromium auto-download fails during install, set `PUPPETEER_SKIP_DOWNLOAD=true` in your `.env` to skip the download and use a system-installed Chrome/Chromium.
 
 ## Legal/Usage Notice
 
