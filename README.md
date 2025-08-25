@@ -9,14 +9,14 @@ Currently only works in a logged-out state so you can only retreive about ~24 li
 - Headless scraping with Puppeteer, scoped to `div[role="main"]`
 - Auto-scroll to load more listings
 - Two extraction modes:
-  - LLM (OpenAI): schema-like JSON extraction
+  - LLM (Gemini): structured JSON extraction
   - Parser (Cheerio): fast, no-LLM, DOM-based extraction
 - Simple local web UI to enter a query and days filter
 
 ## Requirements
 
 - Node.js 18+
-- An OpenAI API key (for LLM mode)
+- A Google Gemini API key (for LLM mode)
 
 ## Install
 
@@ -28,8 +28,8 @@ npm install
 
 Create a `.env` (optional) or export env vars:
 
-- `OPENAI_API_KEY` (required for LLM mode)
-- `OPENAI_MODEL` (optional) defaults to `gpt-5-nano`
+- `GOOGLE_API_KEY` (required for LLM mode; or `GEMINI_API_KEY`)
+- `GEMINI_MODEL` (optional) defaults to `gemini-2.5-pro`
 - `PORT` (optional): defaults to `3000`
 - `PUPPETEER_SKIP_DOWNLOAD` (optional): set to `true` to skip Chromium auto-download if Puppeteer install/download fails
 

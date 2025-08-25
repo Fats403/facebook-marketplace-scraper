@@ -11,10 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google/genai": "^1.15.0",
     "cheerio": "^1.1.2",
     "dotenv": "^17.2.1",
     "express": "^4.21.2",
-    "openai": "^5.12.2",
     "puppeteer": "^24.16.2",
     "zod": "^4.0.17"
   }
