@@ -1,7 +1,10 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
   background: #0e0f13;
   color: #e6e6e6;
 }
@@ -10,7 +13,10 @@ body {
   margin: 40px auto;
   padding: 0 16px;
 }
-h1 { font-size: 24px; margin-bottom: 16px; }
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
 form {
   display: grid;
   gap: 12px;
@@ -25,10 +31,21 @@ form {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (max-width: 700px) {
-  .grid-2 { grid-template-columns: 1fr; }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
-label { display: grid; gap: 6px; font-size: 14px; }
-input[type="text"], input[type="number"], select, textarea {
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
   width: 100%;
   padding: 10px 12px;
   border-radius: 6px;
@@ -41,7 +58,11 @@ input[type="text"], input[type="number"], select, textarea {
   gap: 16px;
   align-items: center;
 }
-.checkbox { display: inline-flex; gap: 8px; align-items: center; }
+.checkbox {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
 .buttons {
   display: flex;
   gap: 8px;
@@ -54,8 +75,12 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
-button[type="reset"] { background: #6b7280; }
-button:hover { opacity: 0.95; }
+button[type="reset"] {
+  background: #6b7280;
+}
+button:hover {
+  opacity: 0.95;
+}
 .result {
   margin-top: 16px;
   background: #151820;
@@ -63,7 +88,9 @@ button:hover { opacity: 0.95; }
   border-radius: 8px;
   border: 1px solid #232736;
 }
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 pre {
   white-space: pre-wrap;
   word-break: break-word;
@@ -91,5 +118,10 @@ pre {
   border-radius: 6px;
   margin-bottom: 8px;
 }
-.card .name { font-weight: 600; margin-bottom: 4px; }
-.card .price { color: #93c5fd; } 
+.card .name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.card .price {
+  color: #93c5fd;
+}
