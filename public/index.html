@@ -1,87 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Marketplace Scraper</title>
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>Marketplace Scraper</h1>
-    <form id="scrape-form">
-      <div class="grid-2">
-        <label>
-          Query
-          <input type="text" id="query" placeholder="mountain bike" />
-        </label>
-        <label>
-          Category (optional; defaults to bicycles)
-          <input type="text" id="category" placeholder="bicycles" value="bicycles" />
-        </label>
-        <label>
-          Location (city slug; defaults to calgary)
-          <input type="text" id="location" placeholder="calgary" value="calgary" />
-        </label>
-        <label>
-          Radius (km, optional, up to 300)
-          <input type="number" id="radius" min="1" max="300" step="1" placeholder="200" />
-        </label>
-      </div>
-
-      <div class="grid-2">
-        <label>
-          Days Since Listed
-          <select id="daysSinceListed" required>
-            <option value="1">One day</option>
-            <option value="2" selected>Two days</option>
-            <option value="7">One week</option>
-            <option value="30">One month</option>
-          </select>
-        </label>
-        <label>
-          Extraction Mode
-          <select id="mode" required>
-            <option value="llm">AI (LLM)</option>
-            <option value="programmatic" selected>Parser</option>
-          </select>
-        </label>
-        <label>
-          Min Price (optional)
-          <input type="number" id="minPrice" min="0" step="1" placeholder="e.g. 100" />
-        </label>
-        <label>
-          Max Price (optional)
-          <input type="number" id="maxPrice" min="0" step="1" placeholder="e.g. 500" />
-        </label>
-        <label>
-          Location ID (optional numeric)
-          <input type="number" id="locationId" min="1" step="1" placeholder="e.g. 102190403" />
-        </label>
-        <div class="checkboxes">
-          <label class="checkbox">
-            <input type="checkbox" id="exact" />
-            <span>Exact match</span>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marketplace Scraper</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Marketplace Scraper</h1>
+      <form id="scrape-form">
+        <div class="grid-2">
+          <label>
+            Query
+            <input type="text" id="query" placeholder="mountain bike" />
           </label>
-          <label class="checkbox">
-            <input type="checkbox" id="sortNewest" />
-            <span>Sort by newest</span>
+          <label>
+            Category (optional; defaults to bicycles)
+            <input
+              type="text"
+              id="category"
+              placeholder="bicycles"
+              value="bicycles"
+            />
+          </label>
+          <label>
+            Location (city slug; defaults to calgary)
+            <input
+              type="text"
+              id="location"
+              placeholder="calgary"
+              value="calgary"
+            />
+          </label>
+          <label>
+            Radius (km, optional, up to 300)
+            <input
+              type="number"
+              id="radius"
+              min="1"
+              max="300"
+              step="1"
+              placeholder="200"
+            />
           </label>
         </div>
-      </div>
 
-      <div class="buttons">
-        <button type="submit">Run</button>
-        <button type="reset" id="reset">Reset</button>
-      </div>
-    </form>
+        <div class="grid-2">
+          <label>
+            Days Since Listed
+            <select id="daysSinceListed" required>
+              <option value="1">One day</option>
+              <option value="2" selected>Two days</option>
+              <option value="7">One week</option>
+              <option value="30">One month</option>
+            </select>
+          </label>
+          <label>
+            Extraction Mode
+            <select id="mode" required>
+              <option value="llm">AI (LLM)</option>
+              <option value="programmatic" selected>Parser</option>
+            </select>
+          </label>
+          <label>
+            Min Price (optional)
+            <input
+              type="number"
+              id="minPrice"
+              min="0"
+              step="1"
+              placeholder="e.g. 100"
+            />
+          </label>
+          <label>
+            Max Price (optional)
+            <input
+              type="number"
+              id="maxPrice"
+              min="0"
+              step="1"
+              placeholder="e.g. 500"
+            />
+          </label>
+          <label>
+            Desired Items (optional)
+            <input
+              type="number"
+              id="desiredItemCount"
+              min="1"
+              step="1"
+              placeholder="e.g. 60"
+            />
+          </label>
+          <label>
+            Location ID (optional numeric)
+            <input
+              type="number"
+              id="locationId"
+              min="1"
+              step="1"
+              placeholder="e.g. 102190403"
+            />
+          </label>
+          <div class="checkboxes">
+            <label class="checkbox">
+              <input type="checkbox" id="exact" />
+              <span>Exact match</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="sortNewest" />
+              <span>Sort by newest</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="debug" />
+              <span>Show browser (debug)</span>
+            </label>
+          </div>
+        </div>
+        <div class="grid-2">
+          <label>
+            Email (optional)
+            <input
+              type="email"
+              id="email"
+              placeholder="you@example.com"
+              autocomplete="username"
+            />
+          </label>
+          <label>
+            Password (optional)
+            <input
+              type="password"
+              id="password"
+              placeholder="Your password"
+              autocomplete="current-password"
+            />
+          </label>
+        </div>
 
-    <div id="result" class="result hidden">
-      <h2>Results</h2>
-      <div id="listings"></div>
-      <pre id="jsonRaw" class="hidden"></pre>
+        <div class="buttons">
+          <button type="submit">Run</button>
+          <button type="reset" id="reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="result" class="result hidden">
+        <h2>Results</h2>
+        <div id="listings"></div>
+        <pre id="jsonRaw" class="hidden"></pre>
+      </div>
     </div>
-  </div>
-  <script src="/main.js"></script>
-</body>
-</html> 
+    <script src="/main.js"></script>
+  </body>
+</html>
