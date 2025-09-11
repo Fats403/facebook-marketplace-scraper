@@ -58,6 +58,7 @@ form.addEventListener("submit", async (e) => {
   const exactChecked = document.getElementById("exact").checked;
   const sortNewestChecked = document.getElementById("sortNewest").checked;
   const debugChecked = document.getElementById("debug").checked;
+  const postFilter = document.getElementById("postFilter").value;
   const mode = document.getElementById("mode").value;
   const emailVal = document.getElementById("email").value.trim();
   const passwordVal = document.getElementById("password").value;
@@ -94,6 +95,7 @@ form.addEventListener("submit", async (e) => {
   if (emailVal !== "") payload.email = emailVal;
   if (passwordVal !== "") payload.password = passwordVal;
   if (debugChecked) payload.debug = true;
+  if (postFilter && postFilter !== "none") payload.postFilter = postFilter;
 
   const button = e.target.querySelector('button[type="submit"]');
   button.disabled = true;

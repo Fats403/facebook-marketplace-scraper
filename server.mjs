@@ -38,6 +38,7 @@ app.post("/api/scrape", async (req, res) => {
       password,
       desiredItemCount,
       debug,
+      postFilter,
     } = req.body || {};
 
     const queryText = typeof query === "string" ? query.trim() : "";
@@ -119,6 +120,10 @@ app.post("/api/scrape", async (req, res) => {
           ? parseInt(desiredItemCount, 10)
           : undefined,
       debug: debug === true,
+      postFilter:
+        typeof postFilter === "string" && postFilter.trim() !== ""
+          ? postFilter.trim()
+          : undefined,
     });
 
     return res.json(result);

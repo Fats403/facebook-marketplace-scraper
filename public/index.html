@@ -64,6 +64,14 @@
             </select>
           </label>
           <label>
+            Post Filter
+            <select id="postFilter">
+              <option value="none" selected>None</option>
+              <option value="exact">Exact (case-insensitive)</option>
+              <option value="fuzzy">Fuzzy (tolerant)</option>
+            </select>
+          </label>
+          <label>
             Min Price (optional)
             <input
               type="number"
@@ -113,7 +121,7 @@
               <span>Sort by newest</span>
             </label>
             <label class="checkbox">
-              <input type="checkbox" id="debug" />
+              <input type="checkbox" id="debug" checked disabled />
               <span>Show browser (debug)</span>
             </label>
           </div>
